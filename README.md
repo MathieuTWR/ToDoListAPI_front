@@ -1,4 +1,4 @@
-# ToDoList Front — React + Vite
+# ToDoList Front avec React + Vite (web) et Tauri (Desktop)
 
 Frontend pédagogique construit avec React et Vite, consommant l'API ToDoList Spring Boot.
 
@@ -52,15 +52,32 @@ VITE_API_URL=http://localhost:8080/api
 
 ### 4. Lancer le serveur de développement
 
-`npm run dev`
-
-- Front disponible ici : http://localhost:5173
-- L'API doit tourner sur : http://localhost:8080
-
+- Front web disponible ici : http://localhost:5173 après avoir fait : `npm run dev`
+- L'API Java Spring Boot doit tourner sur : http://localhost:8080
 > Vite recharge automatiquement le navigateur à chaque modification de fichier.
 
-## Structure du projet
+### 5. Application Desktop (Tauri)
 
+Pour générer l'application au format desktop, les outils suivants sont obligatoires :
+
+- [Rust](https://rustup.rs/)
+- **Visual Studio Build Tools** avec le workload _"Développement Desktop en C++"_
+- Executer les commandes suivantes pour installer tauri via `npm` : 
+- `npm install --save-dev @tauri-apps/cli`
+- `npm install @tauri-apps/api`
+- Suivi de la commande : `npx tauri init` pour l'initialisation de tauri dans le projet
+- Ajouter la clé suivante dans la clé `scripts` deja presente dans le fichier `package.json` :
+```json
+    "tauri": "tauri"
+```
+- executer `npm install` pour charger les dépendances tauri dans le projet
+- Mode développement desktop `npm run tauri dev`
+- Build .msi `npm run tauri build`
+  > Attention l'application .msi effectue ses requêtes depuis `http://tauri.localhost`
+  > 
+  > L'origine de l'app doit être autorisée coté API Spring Boot en plus de `http://localhost:5173`
+
+## Structure du projet
 ```
 src/
 ├── components/              # les composant reutilisable
