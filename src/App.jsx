@@ -1,26 +1,54 @@
 import { useState, useEffect } from "react";
 import { tacheService } from "./services/api.js";
+import TacheList from "./components/TacheList.jsx";
+import TacheForm from "./components/TacheForm.jsx";
 
 function App() {
-    // declare la variables taches comme tableau vide
     const [taches, setTaches] = useState([]);
+    const [tacheEnEdition, setTacheEnEdition] = useState(null);
 
-    // executer 1 seul fois au chargement du composant
-    useEffect(() => {
-        // on consomme l'API via le service
-        // et on stock le retour dans le state (on met a jour taches [tableau vide à tableau avec les données de retour de notre API avec springboot])
+    // recupere toutes les taches depuis l'API
+    const chargerTaches = () => {
         tacheService.getAll().then(setTaches);
+    };
+
+    // lors du premier appel de l'url (en GET) on affiche les taches
+    useEffect(() => {
+        chargerTaches();
     }, []);
 
-    // on boucle sur taches pour afficher chaque tache dans une liste
+    // detecte si on doit executer une creation ou une modification grace a tacheEnEdition
+    const handleSubmit = (form) => {
+        const action = tacheEnEdition
+            ? tacheService.update(tacheEnEdition.id, form)
+            : tacheService.create(form);
+        // on met a jour les données
+        action.then(() => {
+            chargerTaches();
+            setTacheEnEdition(null);
+        });
+    };
+
+    // on supprime puis on recharge les données
+    const handleDelete = (id) => {
+        tacheService.delete(id).then(chargerTaches);
+    };
+
     return (
         <div>
             <h1>ToDo List</h1>
-            <ul>
-                {taches.map(tache => (
-                    <li key={tache.id}>{tache.titre}</li>
-                ))}
-            </ul>
+
+            <TacheForm
+                onSubmit={handleSubmit}
+                tacheEnEdition={tacheEnEdition}
+                onAnnuler={() => setTacheEnEdition(null)}
+            />
+
+            <TacheList
+                taches={taches}
+                onEdit={setTacheEnEdition}
+                onDelete={handleDelete}
+            />
         </div>
     );
 }
