@@ -16,6 +16,7 @@ export default function Login() {
             alert("Status reçu : " + res.status);
             if (!res.ok) throw new Error();
             const data = await res.json();
+            alert("data : " + JSON.stringify(data));
             localStorage.setItem("token", data.token);
             navigate("/taches");
         } catch {
@@ -36,12 +37,12 @@ export default function Login() {
                     />
                 </div>
                 <div className="mb-3">
-                <input
-                    className="form-control"
-                    type="password"
-                    placeholder="Password"
-                    onChange={(e) => setForm({...form, password: e.target.value})}
-                />
+                    <input
+                        className="form-control"
+                        type="password"
+                        placeholder="Password"
+                        onChange={(e) => setForm({...form, password: e.target.value})}
+                    />
                 </div>
                 <div className="text-center">
                     <button type="submit" className="btn btn-primary">Se connecter</button>
