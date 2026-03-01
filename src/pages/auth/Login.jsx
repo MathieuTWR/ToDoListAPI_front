@@ -16,10 +16,12 @@ export default function Login() {
             alert("Status reçu : " + res.status);
             if (!res.ok) throw new Error();
             const data = await res.json();
+            // const debug = await res.text();
+            // alert("texte brut : " + debug);
             alert("data : " + JSON.stringify(data));
             localStorage.setItem("token", data.token);
             navigate("/taches");
-        } catch {
+        } catch(err) {
             alert("Erreur réelle : " + err.message);
             alert("Identifiants invalides");
         }
