@@ -1,27 +1,42 @@
 const API_URL = import.meta.env.VITE_API_URL;
 
+const apiFetch = (endpoint, options = {}) => {
+  const token = localStorage.getItem("token");
+
+  const headers = {
+    "Content-Type": "application/json",
+    ...(token && { Authorization: `Bearer ${token}` }),
+    ...options.headers,
+  };
+
+  return fetch(`${API_URL}${endpoint}`, {
+    ...options,
+    headers,
+  });
+};
+
 export const tacheService = {
 
     getAll: () =>
-        fetch(`${API_URL}/taches`).then(r => r.json()),
+        apiFetch("/taches").then(r => r.json()),
 
     getById: (id) =>
-        fetch(`${API_URL}/taches/${id}`).then(r => r.json()),
+        apiFetch("/taches/${id}").then(r => r.json()),
 
     create: (tache) =>
-        fetch(`${API_URL}/taches`, {
+        apiFetch("/taches", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(tache)
         }).then(r => r.json()),
 
     update: (id, tache) =>
-        fetch(`${API_URL}/taches/${id}`, {
+        apiFetch("/taches/${id}", {
             method: "PUT",
-            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(tache)
         }).then(r => r.json()),
 
     delete: (id) =>
-        fetch(`${API_URL}/taches/${id}`, { method: "DELETE" })
+        apiFetch("/taches/${id}", { method: "DELETE" })
 };
+
+export default apiFetch;

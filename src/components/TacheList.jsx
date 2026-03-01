@@ -14,7 +14,7 @@ const LABEL = {
 };
 
 function TacheList({taches, onEdit, onDelete}) {
-    if (taches.length === 0) {
+    if (!taches || taches.length === 0) {
         return <p className="text-muted">Aucune tâche pour le moment.</p>;
     }
 
@@ -46,6 +46,7 @@ function TacheList({taches, onEdit, onDelete}) {
                         <Link
                             to={`/taches/${tache.id}/edit`}
                             className="btn btn-sm btn-outline-warning"
+                            onClick={() => onEdit(tache.id)}
                         >
                             Modifier
                         </Link>
