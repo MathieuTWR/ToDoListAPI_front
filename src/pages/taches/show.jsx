@@ -44,7 +44,7 @@ function Show() {
                 </div>
                 <div className="card-footer d-flex gap-2">
                     <Link
-                        to="/"
+                        to={`/taches/${id}/edit`}
                         className="btn btn-outline-warning"
                     >
                        Modifier

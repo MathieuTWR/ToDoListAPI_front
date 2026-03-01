@@ -33,7 +33,7 @@ function TacheFormPage() {
     return (
         <div className="container py-4">
             <Link to="/" className="btn btn-secondary mb-4">
-                ← Retour à la liste
+               Retour à la liste
             </Link>
             <div className="card">
                 <div className="card-body">
