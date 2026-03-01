@@ -21,7 +21,7 @@ export const tacheService = {
         apiFetch("/taches").then(r => r.json()),
 
     getById: (id) =>
-        apiFetch("/taches/${id}").then(r => r.json()),
+        apiFetch(`/taches/${id}`).then(r => r.json()),
 
     create: (tache) =>
         apiFetch("/taches", {
@@ -30,13 +30,13 @@ export const tacheService = {
         }).then(r => r.json()),
 
     update: (id, tache) =>
-        apiFetch("/taches/${id}", {
+        apiFetch(`/taches/${id}`, {
             method: "PUT",
             body: JSON.stringify(tache)
         }).then(r => r.json()),
 
     delete: (id) =>
-        apiFetch("/taches/${id}", { method: "DELETE" })
+        apiFetch(`/taches/${id}`, { method: "DELETE" })
 };
 
 export default apiFetch;
