@@ -4,8 +4,8 @@ const apiFetch = (endpoint, options = {}) => {
     const token = localStorage.getItem("token");
     const fullUrl = `${API_URL}${endpoint}`;
     alert("URL complète appelée :" + fullUrl);
-    alert("VITE_API_URL :" + API_URL);
-    alert("endpoint :" + endpoint);
+    // alert("VITE_API_URL :" + API_URL);
+    // alert("endpoint :" + endpoint);
     const headers = {
         "Content-Type": "application/json",
         ...(token && {Authorization: `Bearer ${token}`}),
